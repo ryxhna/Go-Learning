@@ -7,9 +7,23 @@ import (
 )
 
 // TODO: membuat tabel mahasiswa
+var TabelMahasiswa string = `
+	CREATE TABLE mahasiswa(
+		npm VARCHAR(10) PRIMARY KEY,
+		nama VARCHAR(100),
+		kelas VARCHAR(10)
+	)
+`
 
 // TODO: membuat struct mahasiswa
+type Mahasiswa struct {
+	NPM   string `json:"NPM"`
+	Nama  string `json:"Nama"`
+	Kelas string `json:"Kelas"`
+}
 
+// ---------------------- BAGIAN INI TIDAK PERLU DI UBAH --------------------------- //
+// --------------------------------------------------------------------------------- //
 func (m *Mahasiswa) Fields() ([]string, []interface{}) {
 	fields := []string{"npm", "nama", "kelas"}
 	temp := []interface{}{&m.NPM, &m.Nama, &m.Kelas}
@@ -53,4 +67,42 @@ func (m *Mahasiswa) Delete(db *sql.DB) error {
 	return err
 }
 
-// TODO: membuat function GetMahasiswa dan GetAllMahasiswa
+func GetMahasiswa(db *sql.DB, id string) (*Mahasiswa, error) {
+
+	m := &Mahasiswa{}
+	each := m.Structur()
+	_, dst := each.Fields()
+	query := fmt.Sprintf("SELECT * FROM %s WHERE %s = ?", "mahasiswa", "NPM")
+	err := db.QueryRow(query, id).Scan(dst...)
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	return each, nil
+}
+
+func GetAllMahasiswa(db *sql.DB) ([]*Mahasiswa, error) {
+	m := &Mahasiswa{}
+	query := fmt.Sprintf("SELECT * FROM %s", "mahasiswa")
+	data, err := db.Query(query)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer data.Close()
+	var result []*Mahasiswa
+
+	for data.Next() {
+		each := m.Structur()
+		_, dst := each.Fields()
+
+		err := data.Scan(dst...)
+		if err != nil {
+			return nil, err
+		}
+		fmt.Println(each)
+		result = append(result, each)
+	}
+	return result, nil
+}

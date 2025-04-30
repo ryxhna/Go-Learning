@@ -1,4 +1,3 @@
-// gak perlu ada perubahan //
 package test
 
 import (
@@ -9,9 +8,9 @@ import (
 func TestMahasiswa(t *testing.T) {
 	var dataInsertMhs = []model.Mahasiswa{
 		model.Mahasiswa{
-			NPM:   "10121507",
-			Nama:  "Ghina Desrizkymalia Zahirah",
-			Kelas: "4KA09",
+			NPM:   "00000000",
+			Nama:  "Widjoyo",
+			Kelas: "4KA00",
 		},
 		model.Mahasiswa{
 			NPM:   "11111111",

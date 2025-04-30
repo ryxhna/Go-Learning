@@ -6,9 +6,29 @@ import (
 	"strings"
 )
 
-// TODO: membuat tabel nilai
+// ---------------------- BAGIAN INI TIDAK PERLU DI UBAH --------------------------- //
+// --------------------------------------------------------------------------------- //
+var TabelNilai string = `
+	CREATE TABLE nilai(
+		id_nilai INT PRIMARY KEY AUTO_INCREMENT,
+		kd_mk VARCHAR(10) ,
+		npm VARCHAR(10) ,
+		uts REAL NOT NULL,
+		uas REAL NOT NULL,
+		total REAL NOT NULL,
+		grade VARCHAR(5) NOT NULL
+	)
+`
 
-// TODO: membuat struct nilai
+type Nilai struct {
+	Id_nilai int     `json:"id_nilai"`
+	Kd_mk    string  `json:"kd_mk"`
+	NPM      string  `json:"npm"`
+	UAS      float64 `json:"uas"`
+	UTS      float64 `json:"uts"`
+	Total    float64 `json:"total"`
+	Grade    string  `json:"grade"`
+}
 
 func (m *Nilai) Structur() *Nilai {
 	return &Nilai{}
@@ -52,5 +72,43 @@ func (m *Nilai) Delete(db *sql.DB) error {
 	_, err := db.Exec(query, m.NPM)
 	return err
 }
+// --------------------------------------------------------------------------------- //
+
 
 // TODO: membuat function GetNilai dan GetAllNilai
+func GetNilai(db *sql.DB, id string) (*Nilai, error) {
+
+	m := &Nilai{}
+	each := m.Structur()
+	_, dst := each.Fields()
+	query := fmt.Sprintf("SELECT * FROM %s WHERE %s = ?", "nilai", "npm")
+	err := db.QueryRow(query, id).Scan(dst...)
+	if err != nil {
+		return nil, err
+	}
+	return each, nil
+}
+
+func GetAllNilai(db *sql.DB) ([]*Nilai, error) {
+	m := &Nilai{}
+	query := fmt.Sprintf("SELECT * FROM %s", "nilai")
+	data, err := db.Query(query)
+	if err != nil {
+		return nil, err
+	}
+
+	defer data.Close()
+	var result []*Nilai
+
+	for data.Next() {
+		each := m.Structur()
+		_, dst := each.Fields()
+		err := data.Scan(dst...)
+
+		if err != nil {
+			return nil, err
+		}
+		result = append(result, each)
+	}
+	return result, nil
+}

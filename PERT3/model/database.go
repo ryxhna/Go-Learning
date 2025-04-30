@@ -12,10 +12,27 @@ type Table interface {
 	Field() ([]string, []interface{})
 }
 
-// TODO: membuat function Connect  
+func Connect(username string, password string, host string, database string) (*sql.DB, error) {
+	// TODO: sesuaikan dengan port mysql kalian
+	conn := fmt.Sprintf("%s:%s@tcp(%s:3306)/%s", username, password, host, database)
+	db, err := sql.Open("mysql", conn)
+	return db, err
+}
 
-// TODO: membuat function CreateDB 
+// TODO: membuat function CreateDB, CreateTable, DropDB
+func CreateDB(db *sql.DB, name string) error {
+	query := fmt.Sprintf("CREATE DATABASE %v", name)
+	_, err := db.Exec(query)
+	return err
+}
 
-// TODO: membuat function DropDB 
+func CreateTable(db *sql.DB, query string) error {
+	_, err := db.Exec(query)
+	return err
+}
 
-// TODO: membuat function CreateTable 
+func DropDB(db *sql.DB, name string) error {
+	query := fmt.Sprintf("DROP DATABASE  %v", name)
+	_, err := db.Exec(query)
+	return err
+}

@@ -1,4 +1,3 @@
-// gak perlu ada perubahan //
 package test
 
 import (
