@@ -1,3 +1,4 @@
+// gak perlu ada perubahan //
 package test
 
 import (
@@ -9,12 +10,12 @@ import (
 
 var username, password, host, namaDB, defaultDB string
 
-// TODO: membuat function init --> connecting to database mysql di xampp kalian
+// membuat function init --> connecting to database mysql di xampp kalian
 func init() {
 	username = "root"
 	password = ""
 	host = "localhost"
-	namaDB = "db_pert3" // JANGAN GANTI
+	namaDB = "db_PERT3_GO" // JANGAN GANTI
 	defaultDB = "mysql"
 }
 
