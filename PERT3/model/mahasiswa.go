@@ -7,20 +7,8 @@ import (
 )
 
 // TODO: membuat tabel mahasiswa
-var TabelMahasiswa string = `
-	CREATE TABLE mahasiswa(
-		npm VARCHAR(10) PRIMARY KEY,
-		nama VARCHAR(100),
-		kelas VARCHAR(10)
-	)
-`
 
 // TODO: membuat struct mahasiswa
-type Mahasiswa struct {
-	NPM   string `json:"NPM"`
-	Nama  string `json:"Nama"`
-	Kelas string `json:"Kelas"`
-}
 
 // ---------------------- BAGIAN INI TIDAK PERLU DI UBAH --------------------------- //
 // --------------------------------------------------------------------------------- //

@@ -20,19 +20,3 @@ func Connect(username string, password string, host string, database string) (*s
 }
 
 // TODO: membuat function CreateDB, CreateTable, DropDB
-func CreateDB(db *sql.DB, name string) error {
-	query := fmt.Sprintf("CREATE DATABASE %v", name)
-	_, err := db.Exec(query)
-	return err
-}
-
-func CreateTable(db *sql.DB, query string) error {
-	_, err := db.Exec(query)
-	return err
-}
-
-func DropDB(db *sql.DB, name string) error {
-	query := fmt.Sprintf("DROP DATABASE  %v", name)
-	_, err := db.Exec(query)
-	return err
-}
