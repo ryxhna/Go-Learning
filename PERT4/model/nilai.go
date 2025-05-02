@@ -6,8 +6,6 @@ import (
 	"strings"
 )
 
-// ---------------------- BAGIAN INI TIDAK PERLU DI UBAH --------------------------- //
-// --------------------------------------------------------------------------------- //
 var TabelNilai string = `
 	CREATE TABLE nilai(
 		id_nilai INT PRIMARY KEY AUTO_INCREMENT,

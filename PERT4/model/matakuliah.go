@@ -6,8 +6,6 @@ import (
 	"strings"
 )
 
-// ---------------------- BAGIAN INI TIDAK PERLU DI UBAH --------------------------- //
-// --------------------------------------------------------------------------------- //
 var TabelMatkul string = `
 	CREATE TABLE matkul(
 		kd_mk VARCHAR(10) PRIMARY KEY,
@@ -21,8 +19,7 @@ type Matkul struct {
 }
 
 // --------------------------------------------------------------------------------- //
-
-// TODO: membuat isi dari tabel --> struktur, fields, insert
+// Membuat isi dari tabel --> struktur, fields, insert
 func (m *Matkul) Structur() *Matkul {
 	return &Matkul{}
 }

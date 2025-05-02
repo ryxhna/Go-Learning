@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-// TODO: membuat tabel mahasiswa
+// Membuat tabel mahasiswa
 var TabelMahasiswa string = `
 	CREATE TABLE mahasiswa(
 		npm VARCHAR(10) PRIMARY KEY,
@@ -15,7 +15,7 @@ var TabelMahasiswa string = `
 	)
 `
 
-// TODO: membuat struct mahasiswa
+// Membuat struct mahasiswa
 type Mahasiswa struct {
 	NPM   string `json:"NPM"`
 	Nama  string `json:"Nama"`

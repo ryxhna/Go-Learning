@@ -19,7 +19,7 @@ func Connect(username string, password string, host string, database string) (*s
 	return db, err
 }
 
-// TODO: membuat function CreateDB, CreateTable, DropDB
+// Membuat function CreateDB, CreateTable, DropDB
 func CreateDB(db *sql.DB, name string) error {
 	query := fmt.Sprintf("CREATE DATABASE %v", name)
 	_, err := db.Exec(query)
