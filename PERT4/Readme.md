@@ -10,8 +10,8 @@
    `go get github.com/go-sql-driver/mysql`
 4. Check your location now bt running this command in terminal
    `go env GOPATH`
-5. 
-    `go mod tidy`
+5. Search packet & refresh automatically
+   `go mod tidy`
 
 ## Changes for your code
 

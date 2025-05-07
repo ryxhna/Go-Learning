@@ -12,12 +12,12 @@ var username, password, host, namaDB, defaultDB string
 var db *sql.DB
 var err error
 
-// TODO: Sesuaikan nama DB dengan NPM
+// TODO: Sesuaikan Nama DB dengan --> db_PERT4_GO
 func init() {
 	username = "root"
 	password = ""
 	host = "localhost"
-	namaDB = "db_npm"
+	namaDB = "db_PERT4_GO"
 	defaultDB = "mysql"
 }
 
