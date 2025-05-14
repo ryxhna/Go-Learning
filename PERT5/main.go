@@ -21,7 +21,7 @@ type Film struct {
 // TODO: Implementasi dari slice
 var films []Film
 
-// TODO: Mengganti angka 81 pada PORT --> jadi 2 digit NPM terakhir
+// TODO: Membuat function main
 func main() {
 	loadData()
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -29,55 +29,59 @@ func main() {
 	})
 	http.HandleFunc("/films", handleFilms)
 	http.HandleFunc("/films/", handleFilmByID)
-	fmt.Println("Server berjalan di port 8081")
-	log.Fatal(http.ListenAndServe(":8081", nil))
+	fmt.Println("Server berjalan di port 8007")
+	log.Fatal(http.ListenAndServe(":8007", nil))
 }
 
-func loadData() { 															// Membaca file .json yang disimpan dalam function loadData
+func loadData() {
 	file, err := os.ReadFile("films.json")
 	if err == nil {
 		json.Unmarshal(file, &films)
 	}
 }
 
-func saveData() { 															// Menyimpan data ke .json
+func saveData() {
 	data, _ := json.MarshalIndent(films, "", "  ")
 	os.WriteFile("films.json", data, 0644)
 }
 
-// Method GET, POST
+// Method GET, POST ---------------------------------------------------------------------------------
+// Data dapat di GET apabila sudah di POST
 func handleFilms(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet { 										// Data dapat di GET apabila sudah di POST
+	if r.Method == http.MethodGet {
 		respondJSON(w, films, http.StatusOK)
 	} else if r.Method == http.MethodPost {
-		var newFilm Film                                                 	// Data di POST agar dapat ditampilkan oleh server dengan GET
-		if err := json.NewDecoder(r.Body).Decode(&newFilm); err == nil { 	// Membaca r.Body yang berisi data mentah di .json
-			newFilm.ID = len(films) + 1    									// Memberikan ID baru otomatis ketika ada data baru
-			films = append(films, newFilm) 									// Menyimpan ke dalam Slice
-			saveData()                     									// Hasil akan disimpan pada function saveData
+		var newFilm Film
+		if err := json.NewDecoder(r.Body).Decode(&newFilm); err == nil {
+			newFilm.ID = len(films) + 1
+			films = append(films, newFilm)
+			saveData()
 			respondJSON(w, newFilm, http.StatusCreated)
 		} else {
 			respond(w, "Format data tidak valid", http.StatusBadRequest)
 		}
 	} else {
-		respond(w, "Metode tidak didukung", http.StatusMethodNotAllowed) 	// Output yang dihasilkan bila KALIAN running method "SELAIN" GET/POST
+		respond(w, "Metode tidak didukung", http.StatusMethodNotAllowed)
 	}
 }
 
-// Method GET, PUT, DELETE
+// Method GET, PUT, DELETE --------------------------------------------------------------------------
+// Mengambil ID dari URL path. Misalnya, /films/3 yang akan diambil "3"
+// Melakukan looping pada slice films kemudian mencocokkan apakah film.ID sama dengan id di .json
+
 func handleFilmByID(w http.ResponseWriter, r *http.Request) {
-	id, err := strconv.Atoi(r.URL.Path[len("/films/"):]) 					// Mengambil ID dari URL path. Misalnya, /films/3 yang akan diambil "3"
+	id, err := strconv.Atoi(r.URL.Path[len("/films/"):])
 	if err != nil {
 		respond(w, "ID tidak valid", http.StatusBadRequest)
 		return
 	}
 
-	for i, film := range films { 											// Melakukan looping pada slice films
-		if film.ID == id { 													// Mencocokkan apakah film.ID sama dengan id di .json
-			switch r.Method { 												// Mengecek HTTP Method Request
-			case http.MethodGet: 											// If Method GET
+	for i, film := range films {
+		if film.ID == id {
+			switch r.Method {
+			case http.MethodGet:
 				respondJSON(w, film, http.StatusOK)
-			case http.MethodPut: 											// If Method PUT
+			case http.MethodPut:
 				var updatedFilm Film
 				if json.NewDecoder(r.Body).Decode(&updatedFilm) == nil {
 					updatedFilm.ID = id
@@ -87,8 +91,8 @@ func handleFilmByID(w http.ResponseWriter, r *http.Request) {
 				} else {
 					respond(w, "Format data tidak valid", http.StatusBadRequest)
 				}
-			case http.MethodDelete: 										// If Method DELETE
-				films = append(films[:i], films[i+1:]...) 					// Menghapus film dari slice (men)
+			case http.MethodDelete:
+				films = append(films[:i], films[i+1:]...)
 				saveData()
 				respond(w, "data berhasil dihapus", http.StatusOK)
 			default:
@@ -106,6 +110,7 @@ func respond(w http.ResponseWriter, message string, statusCode int) {
 	json.NewEncoder(w).Encode(map[string]string{"message": message})
 }
 
+// TODO: Membuat Respons untuk JSON
 func respondJSON(w http.ResponseWriter, data interface{}, statusCode int) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(statusCode)
