@@ -15,7 +15,17 @@ import (
 
 // TODO: Membuat function main
 
+func loadData() {
+	file, err := os.ReadFile("films.json")
+	if err == nil {
+		json.Unmarshal(file, &films)
+	}
+}
 
+func saveData() {
+	data, _ := json.MarshalIndent(films, "", "  ")
+	os.WriteFile("films.json", data, 0644)
+}
 
 // Method GET, POST ---------------------------------------------------------------------------------
 // Data dapat di GET apabila sudah di POST
