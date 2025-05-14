@@ -26,5 +26,12 @@
     "tahun_rilis": 2010,
     "genre": "Sci-fi",
     "rating": 8.8
+  },
+  {
+    "id": 5,
+    "judul": "The Shawshank Redemption",
+    "tahun_rilis": 1994,
+    "genre": "Drama",
+    "rating": 9.3
   }
 ]

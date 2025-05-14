@@ -38,6 +38,28 @@
 1. xampp = Click start for "Apache"
 2. open terminal = go mod init PERT5
 3. open terminal = go run main.go
-4. open chrome = http://localhost:8007 --> screenshoots (samakan dengan port kaliann)
-5. open chrome = http://localhost:8007/films --> screenshoots
-6. open chrome = http://localhost:8007/films/ 1 --> screenshoots
+4. open firefox = http://localhost:8007 --> screenshoots (samakan dengan port kaliann)
+5. open firefox = http://localhost:8007/films --> screenshoots
+6. open firefox = http://localhost:8007/films/ 1 --> screenshoots
+
+### Additional
+
+1. Open Firefox > Klik Kanan > Inspect > Network > Reload
+2. Klik "Domain" > Klik Kanan > Edit and Send
+3. Ganti method jadi = POST
+4. Makesure endpoinnya = http://localhost:8007/films
+5. Isi body request = Kemudian "Send" --> screenshoot
+   {
+   "id": 1,
+   "judul": "The Shawshank Redemption",
+   "tahun_rilis": 1994,
+   "genre": "Drama",
+   "rating": 9.3
+   }
+
+### Apa aja yang di Screenshoots?
+
+1. http://localhost:8007 (samakan dengan port kaliann)
+2. http://localhost:8007/films
+3. http://localhost:8007/films/1
+4. http://localhost:8007/films --> POST & Isi body request
